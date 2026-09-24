@@ -84,6 +84,10 @@ router.post('/generate', async (req, res) => {
       });
     }
 
+    // Clean up any orphaned invigilation assignments whose exam document no longer exists
+    const validExamIds = await Exam.distinct('_id');
+    await InvigilationAssignment.deleteMany({ exam: { $nin: validExamIds } });
+
     // STEP 4: Conflict detection and fair distribution
     const allInvAssignments = await InvigilationAssignment.find()
       .populate('exam')

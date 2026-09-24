@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const logActivity = require('../utils/activityLogger');
 const verifyAdmin = require("../middleware/verifyAdmin");
 const Student = require("../models/Student"); // Mongoose model
 router.use(verifyAdmin);
@@ -73,7 +74,8 @@ router.post("/", async (req, res) => {
       year: saved.year,
       section: saved.section,
     };
-    res.status(201).json(mapped);
+    await logActivity({ action: 'Add', entityType: 'Student', entityName: saved.name, message: `New student ${saved.name} added` });
+res.status(201).json(mapped);
   } catch (error) {
     console.error("Error adding student (MongoDB):", error);
     if (error.code === 11000) { // duplicate key
@@ -119,7 +121,8 @@ router.put("/:id", async (req, res) => {
       year: updated.year,
       section: updated.section,
     };
-    res.json(mapped);
+    await logActivity({ action: 'Update', entityType: 'Student', entityName: updated.name, message: `Student ${updated.name} updated` });
+res.json(mapped);
   } catch (error) {
     console.error("Error updating student (MongoDB):", error);
     if (error.code === 11000) {
@@ -149,7 +152,8 @@ router.delete("/:id", async (req, res) => {
       year: deleted.year,
       section: deleted.section,
     };
-    res.json({ message: "Student deleted successfully", student: mapped });
+    await logActivity({ action: 'Delete', entityType: 'Student', entityName: deleted.name, message: `Student ${deleted.name} deleted` });
+res.json({ message: "Student deleted successfully", student: mapped });
   } catch (error) {
     console.error("Error deleting student (MongoDB):", error);
     res.status(500).json({ error: "Failed to delete student" });

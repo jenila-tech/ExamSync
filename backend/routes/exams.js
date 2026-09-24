@@ -1,10 +1,13 @@
 const express = require("express");
+const logActivity = require('../utils/activityLogger');
 const router = express.Router();
 
 const Exam = require("../models/Exam"); // Mongoose model
 const Subject = require("../models/Subject"); // Mongoose model
 // Authorization Middleware: Verify user has Admin role
 const verifyAdmin = require("../middleware/verifyAdmin");
+const InvigilationAssignment = require("../models/InvigilationAssignment");
+
 
 // Apply verifyAdmin middleware to all exam endpoints
 router.use(verifyAdmin);
@@ -156,6 +159,7 @@ router.put("/:id", async (req, res) => {
     await existing.save();
 
     const updated = await getJoinedExam(id);
+    await logActivity({ action: 'Update', entityType: 'Exam', entityName: updated.subject?.subject_name || 'Exam', message: `Exam for ${updated.subject?.subject_name || 'subject'} updated` });
     res.json(updated);
   } catch (error) {
     console.error("Error updating exam (MongoDB):", error);
@@ -174,6 +178,9 @@ router.delete("/:id", async (req, res) => {
     if (!deleted) {
       return res.status(404).json({ error: "Exam not found" });
     }
+    await logActivity({ action: 'Delete', entityType: 'Exam', entityName: deleted.subject?.subject_name || 'Exam', message: `Exam for ${deleted.subject?.subject_name || 'subject'} deleted` });
+await InvigilationAssignment.deleteMany({ exam: id });
+
     res.json({ message: "Exam deleted successfully", exam: deleted });
   } catch (error) {
     console.error("Error deleting exam (MongoDB):", error);

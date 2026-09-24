@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const logActivity = require('../utils/activityLogger');
 const Venue = require("../models/Venue"); // Mongoose model
 const Exam = require("../models/Exam");
 const SeatingAssignment = require("../models/SeatingAssignment");
@@ -182,6 +182,7 @@ router.put("/:id", async (req, res) => {
       building: updated.building,
       capacity: updated.capacity,
     };
+await logActivity({ action: 'Update', entityType: 'Venue', entityName: updated.venue_name, message: `Venue ${updated.venue_name} updated` });
     res.json(response);
   } catch (error) {
     console.error("Error updating venue (MongoDB):", error);
@@ -210,6 +211,7 @@ router.delete("/:id", async (req, res) => {
       building: deleted.building,
       capacity: deleted.capacity,
     };
+await logActivity({ action: 'Delete', entityType: 'Venue', entityName: deleted.venue_name, message: `Venue ${deleted.venue_name} deleted` });
     res.json({ message: "Venue deleted successfully", venue: response });
   } catch (error) {
     console.error("Error deleting venue (MongoDB):", error);

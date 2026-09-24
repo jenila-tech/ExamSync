@@ -6,6 +6,7 @@ const mongoose = require('./mongo');
 
 const studentRoutes = require("./routes/students");
 const authRoutes = require("./routes/auth");
+const studentExamsRoutes = require("./routes/studentExams");
 const facultyRoutes = require("./routes/faculty");
 const subjectRoutes = require("./routes/subjects");
 const examRoutes = require("./routes/exams");
@@ -13,11 +14,14 @@ const venueRoutes = require("./routes/venues");
 const seatingRoutes = require("./routes/seating");
 const studentSubjectRoutes = require("./routes/studentSubjects");
 const invigilationRoutes = require("./routes/invigilation");
-const mongoTestRoutes = require('./routes/mongoTest');
+const dashboardRoutes = require('./routes/dashboard');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  allowedHeaders: ['Content-Type', 'x-user-id', 'x-user-role'],
+}));
 app.use(express.json());
 app.use("/students", studentRoutes);
 app.use("/faculty", facultyRoutes);
@@ -27,9 +31,9 @@ app.use("/venues", venueRoutes);
 app.use("/seating", seatingRoutes);
 app.use("/student-subjects", studentSubjectRoutes);
 app.use("/invigilation", invigilationRoutes);
-// Root auth route removed (handled by specific /auth)
 app.use("/auth", authRoutes);
-app.use("/mongo-test", mongoTestRoutes);
+app.use("/student-exams", studentExamsRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 const PORT = 5000;
 

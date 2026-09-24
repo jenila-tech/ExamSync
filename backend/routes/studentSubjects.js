@@ -1,6 +1,7 @@
 // backend/routes/studentSubjects.js - Migrated to MongoDB (Mongoose)
 const express = require("express");
 const router = express.Router();
+const logActivity = require('../utils/activityLogger');
 // PostgreSQL fallback (kept for backup, not used in this migration)
 
 
@@ -130,6 +131,7 @@ router.put("/:id", async (req, res) => {
       .populate("student")
       .populate("subject")
       .lean();
+    await logActivity({ action: 'Update', entityType: 'StudentSubject', entityName: `${updated.student?.name || ''} - ${updated.subject?.subject_name || ''}`, message: `Student-Subject mapping updated` });
     res.json(formatMapping(updated));
   } catch (error) {
     console.error("Error updating mapping (MongoDB):", error);
@@ -148,6 +150,7 @@ router.delete("/:id", async (req, res) => {
     if (!deleted) {
       return res.status(404).json({ error: "Mapping not found" });
     }
+    await logActivity({ action: 'Delete', entityType: 'StudentSubject', entityName: `${deleted.student?.name || ''} - ${deleted.subject?.subject_name || ''}`, message: `Student-Subject mapping deleted` });
     res.json({ message: "Student-Subject mapping deleted successfully", mapping: formatMapping(deleted) });
   } catch (error) {
     console.error("Error deleting mapping (MongoDB):", error);

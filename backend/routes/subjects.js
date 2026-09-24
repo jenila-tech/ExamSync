@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const logActivity = require('../utils/activityLogger');
+
+
 
 const Subject = require("../models/Subject"); // Mongoose model
 const verifyAdmin = require("../middleware/verifyAdmin");
@@ -68,7 +71,8 @@ router.post("/", async (req, res) => {
       subject_name: saved.subject_name,
       department: saved.department,
     };
-    res.status(201).json(mapped);
+    await logActivity({ action: 'Add', entityType: 'Subject', entityName: saved.subject_name, message: `New subject ${saved.subject_name} added` });
+res.status(201).json(mapped);
   } catch (error) {
     console.error("Error adding subject (MongoDB):", error);
     if (error.code === 11000) {
@@ -109,6 +113,7 @@ router.put("/:id", async (req, res) => {
       subject_name: updated.subject_name,
       department: updated.department,
     };
+    await logActivity({ action: 'Update', entityType: 'Subject', entityName: updated.subject_name, message: `Subject ${updated.subject_name} updated` });
     res.json(mapped);
   } catch (error) {
     console.error("Error updating subject (MongoDB):", error);
@@ -136,7 +141,8 @@ router.delete("/:id", async (req, res) => {
       subject_name: deleted.subject_name,
       department: deleted.department,
     };
-    res.json({ message: "Subject deleted successfully", subject: mapped });
+    await logActivity({ action: 'Delete', entityType: 'Subject', entityName: deleted.subject_name, message: `Subject ${deleted.subject_name} deleted` });
+res.json({ message: "Subject deleted successfully", subject: mapped });
   } catch (error) {
     console.error("Error deleting subject (MongoDB):", error);
     // Preserve foreign key constraint handling (unlikely in MongoDB, but keep for compatibility)
