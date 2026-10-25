@@ -51,7 +51,7 @@ function App() {
               📚
             </span>
             <span className="font-extrabold text-lg text-slate-800 tracking-tight">
-              Exam Seating & Invigilation System
+              ExamSync
             </span>
           </div>
 
