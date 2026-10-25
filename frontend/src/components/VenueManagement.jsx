@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API_BASE_URL = "http://localhost:5000/venues";
-
+const API_BASE_URL = "https://examsync-backend-zvqi.onrender.com/venues";
 export default function VenueManagement({ user }) {
   // Check authorization
   const isAdmin = user?.role === "admin";

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
-const API_BASE_URL = "http://localhost:5000/seating";
-const EXAMS_API_URL = "http://localhost:5000/exams";
-const STUDENTS_API_URL = "http://localhost:5000/students";
-const VENUES_API_URL = "http://localhost:5000/venues";
-const STUDENT_SUBJECTS_API_URL = "http://localhost:5000/student-subjects";
+const API_BASE_URL = "https://examsync-backend-zvqi.onrender.com/seating";
+const EXAMS_API_URL = "https://examsync-backend-zvqi.onrender.com/exams";
+const STUDENTS_API_URL = "https://examsync-backend-zvqi.onrender.com/students";
+const VENUES_API_URL = "https://examsync-backend-zvqi.onrender.com/venues";
+const STUDENT_SUBJECTS_API_URL = "https://examsync-backend-zvqi.onrender.com/student-subjects";
 
 export default function SeatingManagement({ user }) {
   // Check authorization

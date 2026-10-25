@@ -12,7 +12,7 @@ function StudentDashboard({ user, onLogout }) {
   useEffect(() => {
     const fetchExams = async () => {
       try {
-        const response = await fetch('http://localhost:5000/student-exams', {
+        const response = await fetch('https://examsync-backend-zvqi.onrender.com/student-exams', {
           headers: {
             'x-user-id': user?.id ? String(user.id) : (user?._id ? String(user._id) : ''),
             'x-user-role': user?.role ? String(user.role) : '',
@@ -36,7 +36,7 @@ function StudentDashboard({ user, onLogout }) {
   useEffect(() => {
     const fetchSeating = async () => {
       try {
-        const response = await fetch('http://localhost:5000/student-exams/seating', {
+        const response = await fetch('https://examsync-backend-zvqi.onrender.com/student-exams/seating', {
           headers: {
             'x-user-id': user?.id ? String(user.id) : (user?._id ? String(user._id) : ''),
             'x-user-role': user?.role ? String(user.role) : '',

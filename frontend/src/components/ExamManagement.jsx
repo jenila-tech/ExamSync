@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-const API_BASE_URL = "http://localhost:5000/exams";
-const SUBJECTS_API_URL = "http://localhost:5000/subjects";
+const API_BASE_URL = "https://examsync-backend-zvqi.onrender.com/exams";
+const SUBJECTS_API_URL = "https://examsync-backend-zvqi.onrender.com/subjects";
 
 export default function ExamManagement({ user }) {
   // Check authorization

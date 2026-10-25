@@ -10,7 +10,7 @@ function FacultyDashboard({ user, onLogout }) {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch('http://localhost:5000/faculty/invigilation', {
+        const response = await fetch('https://examsync-backend-zvqi.onrender.com/faculty/invigilation', {
           headers: {
             'x-user-id': user?.id ? String(user.id) : user?._id ? String(user._id) : '',
             'x-user-role': user?.role ? String(user.role) : '',

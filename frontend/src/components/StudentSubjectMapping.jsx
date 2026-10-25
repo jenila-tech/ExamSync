@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-const API_BASE_URL = "http://localhost:5000/student-subjects";
-const STUDENTS_API_URL = "http://localhost:5000/students";
-const SUBJECTS_API_URL = "http://localhost:5000/subjects";
+const API_BASE_URL = "https://examsync-backend-zvqi.onrender.com/student-subjects";
+const STUDENTS_API_URL = "https://examsync-backend-zvqi.onrender.com/students";
+const SUBJECTS_API_URL = "https://examsync-backend-zvqi.onrender.com/subjects";
 
 export default function StudentSubjectMapping({ user }) {
   // Check authorization

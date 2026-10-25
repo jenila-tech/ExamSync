@@ -41,7 +41,7 @@ function InvigilationManagement({ user }) {
 
   const fetchExams = async () => {
     try {
-      const res = await fetch("http://localhost:5000/exams", { headers: getAuthHeaders() });
+      const res = await fetch("https://examsync-backend-zvqi.onrender.com/exams", { headers: getAuthHeaders() });
       if (res.ok) {
         const data = await res.json();
         setExams(data);
@@ -53,7 +53,7 @@ function InvigilationManagement({ user }) {
 
   const fetchFacultyCount = async () => {
     try {
-      const res = await fetch("http://localhost:5000/faculty", { headers: getAuthHeaders() });
+      const res = await fetch("https://examsync-backend-zvqi.onrender.com/faculty", { headers: getAuthHeaders() });
       if (res.ok) {
         const data = await res.json();
         setTotalFacultyCount(data.length);
@@ -65,7 +65,7 @@ function InvigilationManagement({ user }) {
 
   const fetchSeatingVenues = async (examId) => {
     try {
-      const res = await fetch(`http://localhost:5000/seating/${examId}`, { headers: getAuthHeaders() });
+      const res = await fetch(`https://examsync-backend-zvqi.onrender.com/seating/${examId}`, { headers: getAuthHeaders() });
       if (res.ok) {
         const data = await res.json();
         const uniqueVenues = new Set(data.map((item) => item.venue_id));
@@ -83,7 +83,7 @@ function InvigilationManagement({ user }) {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`http://localhost:5000/invigilation/${examId}`, {
+      const res = await fetch(`https://examsync-backend-zvqi.onrender.com/invigilation/${examId}`, {
         headers: getAuthHeaders(),
       });
       if (res.ok) {
@@ -111,7 +111,7 @@ function InvigilationManagement({ user }) {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5000/invigilation/generate", {
+      const res = await fetch("https://examsync-backend-zvqi.onrender.com/invigilation/generate", {
         method: "POST",
         headers: getAuthHeaders(),
         body: JSON.stringify({ exam_id: selectedExamId }),
@@ -142,7 +142,7 @@ function InvigilationManagement({ user }) {
     setSuccess("");
 
     try {
-      const res = await fetch(`http://localhost:5000/invigilation/${selectedExamId}`, {
+      const res = await fetch(`https://examsync-backend-zvqi.onrender.com/invigilation/${selectedExamId}`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       });
