@@ -19,10 +19,7 @@ const dashboardRoutes = require('./routes/dashboard');
 const app = express();
 
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://exam-sync-one.vercel.app'
-  ],
+  origin: true,
   allowedHeaders: ['Content-Type', 'x-user-id', 'x-user-role'],
 }));
 
