@@ -19,10 +19,15 @@ const dashboardRoutes = require('./routes/dashboard');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://exam-sync-one.vercel.app'
+  ],
   allowedHeaders: ['Content-Type', 'x-user-id', 'x-user-role'],
 }));
+
 app.use(express.json());
+
 app.use("/students", studentRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/subjects", subjectRoutes);
@@ -35,14 +40,11 @@ app.use("/auth", authRoutes);
 app.use("/student-exams", studentExamsRoutes);
 app.use("/dashboard", dashboardRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.send("Examination Management System Backend is Running!");
 });
-
-
-
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
